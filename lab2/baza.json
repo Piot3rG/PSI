@@ -1,0 +1,681 @@
+{
+    "title": "System ekspercki: wstępna diagnoza usterek samochodu",
+    "description": "Edukacyjny system regułowy. Wyniki są wskazówkami, a nie pewną diagnozą techniczną.",
+    "questions": {
+        "Q1": {
+            "text": "Co dzieje się po przekręceniu kluczyka lub naciśnięciu przycisku START?",
+            "answers": [
+                "silnik_nie_kreci",
+                "kreci_nie_uruchamia_sie",
+                "uruchamia_sie_i_gasnie",
+                "uruchamia_sie_normalnie"
+            ]
+        },
+        "Q2": {
+            "text": "Jak zachowują się kontrolki na desce rozdzielczej przed uruchomieniem?",
+            "answers": [
+                "nie_swieca",
+                "swieca_normalnie",
+                "przygasaja",
+                "migaja"
+            ]
+        },
+        "Q3": {
+            "text": "Czy słychać kliknięcie podczas próby uruchomienia silnika?",
+            "answers": [
+                "tak_jedno",
+                "tak_wiele",
+                "nie",
+                "nie_dotyczy"
+            ]
+        },
+        "Q4": {
+            "text": "Jak zachowują się światła podczas próby uruchomienia?",
+            "answers": [
+                "mocne",
+                "przygasaja",
+                "nie_dzialaja",
+                "nie_sprawdzano"
+            ]
+        },
+        "Q5": {
+            "text": "Czy po uruchomieniu świeci się kontrolka akumulatora?",
+            "answers": [
+                "tak",
+                "nie",
+                "nie_wiem"
+            ]
+        },
+        "Q6": {
+            "text": "Czy silnik pracuje nierówno lub drży na biegu jałowym?",
+            "answers": [
+                "tak",
+                "nie",
+                "czasami"
+            ]
+        },
+        "Q7": {
+            "text": "Czy występuje utrata mocy podczas przyspieszania?",
+            "answers": [
+                "tak",
+                "nie",
+                "czasami"
+            ]
+        },
+        "Q8": {
+            "text": "Czy temperatura silnika jest wyższa niż zwykle?",
+            "answers": [
+                "tak",
+                "nie",
+                "nie_wiem"
+            ]
+        },
+        "Q9": {
+            "text": "Czy widać wyciek płynu pod samochodem?",
+            "answers": [
+                "olej",
+                "plyn_chlodniczy",
+                "inny_plyn",
+                "brak",
+                "nie_wiem"
+            ]
+        },
+        "Q10": {
+            "text": "Czy podczas jazdy słychać nietypowy dźwięk?",
+            "answers": [
+                "metaliczne_stukanie",
+                "piszczenie",
+                "szum_huczenie",
+                "brak",
+                "inny"
+            ]
+        },
+        "Q11": {
+            "text": "Czy podczas hamowania pojawia się problem?",
+            "answers": [
+                "slabe_hamowanie",
+                "drgania",
+                "piszczenie",
+                "brak",
+                "nie_sprawdzano"
+            ]
+        },
+        "Q12": {
+            "text": "Czy na desce rozdzielczej świeci się kontrolka silnika (Check Engine)?",
+            "answers": [
+                "tak_stale",
+                "tak_miga",
+                "nie",
+                "nie_wiem"
+            ]
+        },
+        "Q13": {
+            "text": "Kiedy problem najczęściej występuje?",
+            "answers": [
+                "na_zimnym_silniku",
+                "na_cieplym_silniku",
+                "podczas_jazdy",
+                "przy_uruchamianiu",
+                "caly_czas"
+            ]
+        },
+        "Q14": {
+            "text": "Czy ostatnio pojawiły się problemy z tankowaniem, paliwem lub jego zużyciem?",
+            "answers": [
+                "trudne_uruchamianie_po_tankowaniu",
+                "duze_spalanie",
+                "mozliwy_brak_paliwa",
+                "nie",
+                "nie_wiem"
+            ]
+        }
+    },
+    "rules": [
+        {
+            "id": "R01",
+            "if": {
+                "Q1": "silnik_nie_kreci",
+                "Q2": "przygasaja",
+                "Q4": "przygasaja"
+            },
+            "then": {
+                "diagnosis": "Prawdopodobnie rozładowany lub zużyty akumulator",
+                "action": "Sprawdź napięcie akumulatora i jego połączenia; w razie potrzeby naładuj i wykonaj test akumulatora.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R02",
+            "if": {
+                "Q1": "silnik_nie_kreci",
+                "Q2": "nie_swieca",
+                "Q4": "nie_dzialaja"
+            },
+            "then": {
+                "diagnosis": "Możliwy brak zasilania elektrycznego",
+                "action": "Sprawdź zaciski akumulatora, główne przewody zasilające i bezpieczniki.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R03",
+            "if": {
+                "Q1": "silnik_nie_kreci",
+                "Q3": "tak_jedno",
+                "Q4": "mocne"
+            },
+            "then": {
+                "diagnosis": "Możliwy problem z rozrusznikiem lub jego obwodem",
+                "action": "Zleć sprawdzenie rozrusznika, przekaźnika i przewodów przez mechanika.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R04",
+            "if": {
+                "Q1": "silnik_nie_kreci",
+                "Q3": "tak_wiele",
+                "Q2": "przygasaja"
+            },
+            "then": {
+                "diagnosis": "Możliwe zbyt niskie napięcie akumulatora",
+                "action": "Sprawdź akumulator i połączenia masowe przed dalszą diagnostyką.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R05",
+            "if": {
+                "Q1": "kreci_nie_uruchamia_sie",
+                "Q14": "mozliwy_brak_paliwa",
+                "Q13": "przy_uruchamianiu"
+            },
+            "then": {
+                "diagnosis": "Możliwy brak paliwa lub problem z jego doprowadzeniem",
+                "action": "Sprawdź poziom paliwa; jeśli jest wystarczający, zleć kontrolę pompy i układu paliwowego.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R06",
+            "if": {
+                "Q1": "kreci_nie_uruchamia_sie",
+                "Q14": "trudne_uruchamianie_po_tankowaniu",
+                "Q12": "tak_stale"
+            },
+            "then": {
+                "diagnosis": "Możliwy problem związany z paliwem lub układem kontroli emisji",
+                "action": "Nie wymieniaj części na próbę; odczytaj kody błędów i sprawdź układ paliwowy.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R07",
+            "if": {
+                "Q1": "kreci_nie_uruchamia_sie",
+                "Q6": "tak",
+                "Q12": "tak_stale"
+            },
+            "then": {
+                "diagnosis": "Możliwa usterka zapłonu lub sterowania silnikiem",
+                "action": "Odczytaj kody OBD-II i zleć sprawdzenie świec, cewek oraz czujników.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R08",
+            "if": {
+                "Q1": "uruchamia_sie_i_gasnie",
+                "Q12": "tak_stale",
+                "Q13": "na_zimnym_silniku"
+            },
+            "then": {
+                "diagnosis": "Możliwy problem z mieszanką paliwowo-powietrzną lub czujnikiem",
+                "action": "Wykonaj diagnostykę OBD-II i sprawdź dolot oraz czujniki silnika.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R09",
+            "if": {
+                "Q1": "uruchamia_sie_i_gasnie",
+                "Q14": "trudne_uruchamianie_po_tankowaniu",
+                "Q13": "na_cieplym_silniku"
+            },
+            "then": {
+                "diagnosis": "Możliwy problem z układem paliwowym lub odpowietrzaniem zbiornika",
+                "action": "Zleć diagnostykę układu paliwowego i układu odpowietrzania zbiornika.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R10",
+            "if": {
+                "Q1": "uruchamia_sie_normalnie",
+                "Q5": "tak",
+                "Q2": "swieca_normalnie"
+            },
+            "then": {
+                "diagnosis": "Możliwy problem z ładowaniem akumulatora",
+                "action": "Sprawdź napięcie ładowania, pasek osprzętu i alternator.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R11",
+            "if": {
+                "Q5": "tak",
+                "Q10": "piszczenie",
+                "Q13": "podczas_jazdy"
+            },
+            "then": {
+                "diagnosis": "Możliwy problem z paskiem osprzętu lub układem ładowania",
+                "action": "Ogranicz jazdę i zleć kontrolę paska oraz alternatora.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R12",
+            "if": {
+                "Q2": "przygasaja",
+                "Q4": "przygasaja",
+                "Q5": "tak"
+            },
+            "then": {
+                "diagnosis": "Możliwa usterka układu ładowania lub akumulatora",
+                "action": "Sprawdź akumulator, alternator i połączenia elektryczne.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R13",
+            "if": {
+                "Q6": "tak",
+                "Q7": "tak",
+                "Q12": "tak_stale"
+            },
+            "then": {
+                "diagnosis": "Możliwa usterka zapłonu, wtrysku lub czujników silnika",
+                "action": "Odczytaj kody błędów; unikaj mocnego przyspieszania do czasu diagnozy.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R14",
+            "if": {
+                "Q6": "tak",
+                "Q13": "na_zimnym_silniku",
+                "Q12": "nie"
+            },
+            "then": {
+                "diagnosis": "Możliwa nierówna praca na zimno",
+                "action": "Sprawdź układ dolotowy, zapłon i czujnik temperatury; objawy powinien ocenić mechanik.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R15",
+            "if": {
+                "Q6": "czasami",
+                "Q7": "czasami",
+                "Q12": "tak_stale"
+            },
+            "then": {
+                "diagnosis": "Możliwy sporadyczny błąd sterowania silnikiem",
+                "action": "Zapisz okoliczności występowania objawu i odczytaj zapisane kody OBD-II.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R16",
+            "if": {
+                "Q7": "tak",
+                "Q14": "duze_spalanie",
+                "Q12": "tak_stale"
+            },
+            "then": {
+                "diagnosis": "Możliwy problem z mieszanką paliwową lub czujnikiem silnika",
+                "action": "Zleć odczyt parametrów OBD-II i kontrolę dolotu, sond oraz układu paliwowego.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R17",
+            "if": {
+                "Q7": "tak",
+                "Q13": "podczas_jazdy",
+                "Q10": "metaliczne_stukanie"
+            },
+            "then": {
+                "diagnosis": "Możliwa poważna usterka mechaniczna silnika lub osprzętu",
+                "action": "Zatrzymaj się w bezpiecznym miejscu i nie kontynuuj jazdy, jeśli stukanie jest głośne lub narasta.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R18",
+            "if": {
+                "Q8": "tak",
+                "Q9": "plyn_chlodniczy",
+                "Q13": "podczas_jazdy"
+            },
+            "then": {
+                "diagnosis": "Możliwy wyciek płynu chłodniczego i przegrzewanie",
+                "action": "Zatrzymaj pojazd w bezpiecznym miejscu i wyłącz silnik; nie odkręcaj gorącego korka układu chłodzenia.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R19",
+            "if": {
+                "Q8": "tak",
+                "Q9": "brak",
+                "Q13": "podczas_jazdy"
+            },
+            "then": {
+                "diagnosis": "Możliwy problem z chłodzeniem mimo braku widocznego wycieku",
+                "action": "Po ostygnięciu zleć kontrolę poziomu płynu, wentylatora, termostatu i chłodnicy.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R20",
+            "if": {
+                "Q8": "tak",
+                "Q10": "metaliczne_stukanie",
+                "Q9": "olej"
+            },
+            "then": {
+                "diagnosis": "Możliwa poważna usterka smarowania lub silnika",
+                "action": "Natychmiast bezpiecznie zatrzymaj pojazd i wyłącz silnik; nie uruchamiaj go ponownie przed kontrolą.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R21",
+            "if": {
+                "Q9": "olej",
+                "Q10": "metaliczne_stukanie",
+                "Q13": "na_cieplym_silniku"
+            },
+            "then": {
+                "diagnosis": "Możliwy wyciek oleju z ryzykiem uszkodzenia silnika",
+                "action": "Sprawdź poziom oleju dopiero w bezpiecznych warunkach; przy niskim poziomie lub głośnym stukaniu nie jedź dalej.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R22",
+            "if": {
+                "Q9": "plyn_chlodniczy",
+                "Q8": "nie",
+                "Q13": "na_zimnym_silniku"
+            },
+            "then": {
+                "diagnosis": "Możliwy wyciek płynu chłodniczego bez obecnego przegrzania",
+                "action": "Nie ignoruj wycieku; sprawdź poziom na zimnym silniku i zleć kontrolę szczelności.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R23",
+            "if": {
+                "Q10": "piszczenie",
+                "Q11": "piszczenie",
+                "Q13": "podczas_jazdy"
+            },
+            "then": {
+                "diagnosis": "Możliwe zużycie elementów ciernych hamulców lub problem z paskiem",
+                "action": "Ustal, czy dźwięk pochodzi z hamulców czy komory silnika; zleć kontrolę, zwłaszcza jeśli nasila się przy hamowaniu.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R24",
+            "if": {
+                "Q11": "slabe_hamowanie",
+                "Q10": "piszczenie",
+                "Q13": "podczas_jazdy"
+            },
+            "then": {
+                "diagnosis": "Możliwa usterka układu hamulcowego",
+                "action": "Nie kontynuuj jazdy, jeśli hamowanie jest osłabione; zorganizuj pomoc drogową i kontrolę hamulców.",
+                "severity": "wysokie"
+            }
+        },
+        {
+            "id": "R25",
+            "if": {
+                "Q11": "drgania",
+                "Q10": "szum_huczenie",
+                "Q13": "podczas_jazdy"
+            },
+            "then": {
+                "diagnosis": "Możliwy problem z tarczami hamulcowymi lub elementami koła",
+                "action": "Zleć kontrolę hamulców, kół i zawieszenia; przy silnych drganiach przerwij jazdę.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R26",
+            "if": {
+                "Q11": "slabe_hamowanie",
+                "Q2": "swieca_normalnie",
+                "Q13": "podczas_jazdy"
+            },
+            "then": {
+                "diagnosis": "Możliwa usterka hydrauliki lub elementów hamulcowych",
+                "action": "Nie używaj samochodu do czasu sprawdzenia układu hamulcowego przez mechanika.",
+                "severity": "wysokie"
+            }
+        },
+        {
+            "id": "R27",
+            "if": {
+                "Q10": "szum_huczenie",
+                "Q13": "podczas_jazdy",
+                "Q7": "nie"
+            },
+            "then": {
+                "diagnosis": "Możliwe zużycie łożyska koła lub opon",
+                "action": "Zleć kontrolę łożysk, opon i geometrii; unikaj długiej jazdy, jeśli hałas narasta.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R28",
+            "if": {
+                "Q10": "metaliczne_stukanie",
+                "Q6": "tak",
+                "Q13": "na_cieplym_silniku"
+            },
+            "then": {
+                "diagnosis": "Możliwy problem mechaniczny silnika",
+                "action": "Sprawdź poziom oleju w bezpiecznych warunkach; przy głośnym stukaniu wyłącz silnik i skorzystaj z pomocy.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R29",
+            "if": {
+                "Q12": "tak_miga",
+                "Q6": "tak",
+                "Q7": "tak"
+            },
+            "then": {
+                "diagnosis": "Możliwe wypadanie zapłonów z ryzykiem uszkodzenia katalizatora",
+                "action": "Ogranicz obciążenie i zatrzymaj pojazd w bezpiecznym miejscu; pilnie zleć diagnostykę.",
+                "severity": "wysokie"
+            }
+        },
+        {
+            "id": "R30",
+            "if": {
+                "Q12": "tak_stale",
+                "Q14": "duze_spalanie",
+                "Q6": "nie"
+            },
+            "then": {
+                "diagnosis": "Możliwy błąd układu emisji spalin lub czujnika",
+                "action": "Odczytaj kody OBD-II; kontrolka sama nie wskazuje jednoznacznie uszkodzonej części.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R31",
+            "if": {
+                "Q12": "tak_stale",
+                "Q7": "nie",
+                "Q13": "na_cieplym_silniku"
+            },
+            "then": {
+                "diagnosis": "Możliwy zapisany błąd sterownika bez wyraźnej utraty mocy",
+                "action": "Odczytaj kody błędów i sprawdź usterkę przed kasowaniem kodów.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R32",
+            "if": {
+                "Q14": "duze_spalanie",
+                "Q7": "tak",
+                "Q6": "czasami"
+            },
+            "then": {
+                "diagnosis": "Możliwy problem z zapłonem, wtryskiem lub filtrem powietrza",
+                "action": "Sprawdź filtr powietrza i wykonaj diagnostykę układu paliwowego oraz zapłonowego.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R33",
+            "if": {
+                "Q14": "trudne_uruchamianie_po_tankowaniu",
+                "Q1": "uruchamia_sie_i_gasnie",
+                "Q12": "nie"
+            },
+            "then": {
+                "diagnosis": "Możliwy problem z odpowietrzaniem zbiornika lub jakością paliwa",
+                "action": "Zapisz, po jakim tankowaniu występuje problem, i zleć sprawdzenie układu paliwowego.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R34",
+            "if": {
+                "Q3": "tak_jedno",
+                "Q1": "silnik_nie_kreci",
+                "Q2": "swieca_normalnie"
+            },
+            "then": {
+                "diagnosis": "Możliwy problem z elektromagnesem rozrusznika lub połączeniami",
+                "action": "Zleć sprawdzenie rozrusznika, przewodów i połączeń masowych.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R35",
+            "if": {
+                "Q4": "przygasaja",
+                "Q1": "kreci_nie_uruchamia_sie",
+                "Q2": "przygasaja"
+            },
+            "then": {
+                "diagnosis": "Możliwy słaby akumulator lub duży pobór prądu przy rozruchu",
+                "action": "Sprawdź stan akumulatora, przewody i pobór prądu rozrusznika.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R36",
+            "if": {
+                "Q9": "inny_plyn",
+                "Q10": "szum_huczenie",
+                "Q13": "podczas_jazdy"
+            },
+            "then": {
+                "diagnosis": "Możliwy wyciek płynu eksploatacyjnego i problem z podzespołem",
+                "action": "Nie dotykaj nieznanego płynu; ustal jego źródło w warsztacie i sprawdź poziomy płynów.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R37",
+            "if": {
+                "Q1": "uruchamia_sie_normalnie",
+                "Q6": "nie",
+                "Q12": "nie"
+            },
+            "then": {
+                "diagnosis": "Brak wyraźnych oznak usterki silnika w podanych odpowiedziach",
+                "action": "Jeśli objawy nadal występują, opisz je dokładniej i wykonaj kontrolę; brak dopasowania nie wyklucza usterki.",
+                "severity": "niska"
+            }
+        },
+        {
+            "id": "R38",
+            "if": {
+                "Q8": "tak",
+                "Q5": "tak",
+                "Q9": "plyn_chlodniczy"
+            },
+            "then": {
+                "diagnosis": "Możliwe przegrzewanie oraz problem z napędem osprzętu lub układem chłodzenia",
+                "action": "Zatrzymaj pojazd, wyłącz silnik i zorganizuj kontrolę układu chłodzenia oraz ładowania.",
+                "severity": "wysokie"
+            }
+        },
+        {
+            "id": "R39",
+            "if": {
+                "Q11": "drgania",
+                "Q7": "nie",
+                "Q13": "podczas_jazdy"
+            },
+            "then": {
+                "diagnosis": "Możliwy problem z tarczami hamulcowymi, kołami lub zawieszeniem",
+                "action": "Zleć kontrolę układu hamulcowego, wyważenia kół i zawieszenia.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R40",
+            "if": {
+                "Q2": "migaja",
+                "Q1": "silnik_nie_kreci",
+                "Q3": "tak_wiele"
+            },
+            "then": {
+                "diagnosis": "Możliwy problem z napięciem zasilania lub połączeniami elektrycznymi",
+                "action": "Sprawdź akumulator i klemy; jeśli problem wraca, zleć pomiar instalacji elektrycznej.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R41",
+            "if": {
+                "Q1": "kreci_nie_uruchamia_sie",
+                "Q14": "nie",
+                "Q12": "tak_stale"
+            },
+            "then": {
+                "diagnosis": "Możliwy problem z zapłonem, czujnikiem lub sterowaniem paliwem",
+                "action": "Odczytaj kody OBD-II i zleć kontrolę układu zapłonowego oraz paliwowego.",
+                "severity": "umiarkowane"
+            }
+        },
+        {
+            "id": "R42",
+            "if": {
+                "Q6": "tak",
+                "Q10": "metaliczne_stukanie",
+                "Q12": "tak_miga"
+            },
+            "then": {
+                "diagnosis": "Możliwa poważna nieprawidłowa praca silnika",
+                "action": "Zatrzymaj się bezpiecznie i wyłącz silnik; nie kontynuuj jazdy przed diagnostyką.",
+                "severity": "wysokie"
+            }
+        }
+    ]
+}
